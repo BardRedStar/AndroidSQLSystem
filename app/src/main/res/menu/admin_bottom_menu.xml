@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_pets"
+        android:icon="@drawable/ic_pets_black_24dp"
+        android:title="Pets"
+        android:enabled="true"/>
+
+    <item
+        android:id="@+id/navigation_questions"
+        android:icon="@drawable/ic_help_black_24dp"
+        android:title="Questions" />
+
+</menu>
