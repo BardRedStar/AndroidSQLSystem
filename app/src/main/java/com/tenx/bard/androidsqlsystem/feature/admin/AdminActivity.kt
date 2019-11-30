@@ -2,7 +2,7 @@ package com.tenx.bard.androidsqlsystem.feature.admin
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tenx.bard.androidsqlsystem.MyApplication
@@ -68,7 +68,6 @@ class AdminActivity : AppCompatActivity() {
 
             if (newItems != null) {
                 runOnUiThread {
-                    Log.w("Admin", "Items: ${items.size}")
                     updateAdapterWithList(newItems)
                 }
             }
@@ -84,6 +83,7 @@ class AdminActivity : AppCompatActivity() {
                 app.database?.petQuestionDao()?.deleteQuestion(items[position].id)
             }
             runOnUiThread{
+                Toast.makeText(this, "${items[position].text} has been deleted!", Toast.LENGTH_LONG).show()
                 items = items.filter { it.id != items[position].id }
                 updateAdapterWithList(items)
             }

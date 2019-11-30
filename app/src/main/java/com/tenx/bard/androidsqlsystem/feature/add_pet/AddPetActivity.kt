@@ -1,20 +1,16 @@
 package com.tenx.bard.androidsqlsystem.feature.add_pet
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tenx.bard.androidsqlsystem.MyApplication
 import com.tenx.bard.androidsqlsystem.R
 import com.tenx.bard.androidsqlsystem.api.models.Pet
-import com.tenx.bard.androidsqlsystem.feature.admin.AdminActivity
-import com.tenx.bard.androidsqlsystem.util.editTextToTextView
 import kotlinx.android.synthetic.main.activity_add_show.*
 import kotlinx.android.synthetic.main.activity_add_show.toolbar
-import kotlinx.android.synthetic.main.activity_main.*
 
 class AddPetActivity : AppCompatActivity() {
 
@@ -36,7 +32,6 @@ class AddPetActivity : AppCompatActivity() {
             if (questions != null) {
                 runOnUiThread {
                     rvList.adapter = PetProbabilityAdapter(questions, emptyList())
-                    Log.w("PETS", "adapter set!")
                 }
             }
         }.start()
@@ -51,15 +46,19 @@ class AddPetActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == R.id.actionAddObject) {
-
             val app = application as MyApplication
 
             val name = etText.text.toString()
+
+            if (name.isEmpty() || name.isBlank()) {
+                Toast.makeText(this, "Type the correct name!", Toast.LENGTH_LONG).show()
+                return true
+            }
+
             val pet = Pet(0, name)
 
             Thread {
                 val id = app.database?.petQuestionDao()?.insertPet(pet)
-                Log.w("PETS", "insert pet: $id")
                 if (id != null) {
                     runOnUiThread {
                         saveProbabilitiesForPet(id)
@@ -70,7 +69,8 @@ class AddPetActivity : AppCompatActivity() {
                     }
                 }
             }.start()
-
+        } else if (item?.itemId == android.R.id.home) {
+            finish()
         }
         return true
     }
@@ -79,7 +79,6 @@ class AddPetActivity : AppCompatActivity() {
 
         val probabilities = (rvList.adapter as PetProbabilityAdapter).probabilities
         if (probabilities.isEmpty()) {
-            Log.w("PETS", "finish is empty")
             runOnUiThread {
                 this.finish()
             }
@@ -91,23 +90,10 @@ class AddPetActivity : AppCompatActivity() {
         }
         val app = application as MyApplication
         Thread {
-            Log.w("PETS", "insert probabilities")
             app.database?.petQuestionDao()?.insertProbabilities(probabilities)
             runOnUiThread {
                 this.finish()
-                Log.w("PETS", "finish after probability adding")
             }
         }.start()
-
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
     }
 }
