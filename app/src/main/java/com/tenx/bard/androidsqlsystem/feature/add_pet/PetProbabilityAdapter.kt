@@ -7,6 +7,10 @@ import com.tenx.bard.androidsqlsystem.base.adapter.ObjectProbabilityAdapter
 class PetProbabilityAdapter(questions: List<Question>, probabilities: List<Probability>) :
         ObjectProbabilityAdapter<Question>(questions, probabilities) {
 
+    init {
+        this.probabilities = questions.map { Probability(0, 0, it.uid, 0.0, 0.0)}
+    }
+
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.titleTextView.text = objects[position].text
 

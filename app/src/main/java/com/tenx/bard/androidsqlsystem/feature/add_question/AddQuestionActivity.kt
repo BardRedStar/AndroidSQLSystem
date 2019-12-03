@@ -3,18 +3,14 @@ package com.tenx.bard.androidsqlsystem.feature.add_question
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tenx.bard.androidsqlsystem.MyApplication
 import com.tenx.bard.androidsqlsystem.R
-import com.tenx.bard.androidsqlsystem.api.models.Pet
 import com.tenx.bard.androidsqlsystem.api.models.Question
-import com.tenx.bard.androidsqlsystem.feature.add_pet.PetProbabilityAdapter
-import com.tenx.bard.androidsqlsystem.feature.admin.AdminActivity
-import com.tenx.bard.androidsqlsystem.util.editTextToTextView
 import kotlinx.android.synthetic.main.activity_add_show.*
 import kotlinx.android.synthetic.main.activity_add_show.toolbar
-import kotlinx.android.synthetic.main.activity_main.*
 
 class AddQuestionActivity : AppCompatActivity() {
 
@@ -49,11 +45,16 @@ class AddQuestionActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
         if (item?.itemId == R.id.actionAddObject) {
 
             val app = application as MyApplication
 
             val text = etText.text.toString()
+            if (text.isEmpty() || text.isBlank()) {
+                Toast.makeText(this, "Type the correct question text!", Toast.LENGTH_LONG).show()
+                return true
+            }
             val question = Question(0, text)
 
             Thread {
@@ -65,6 +66,8 @@ class AddQuestionActivity : AppCompatActivity() {
                 }
             }.start()
 
+        } else if (item?.itemId == android.R.id.home) {
+            finish()
         }
         return true
     }
@@ -89,15 +92,5 @@ class AddQuestionActivity : AppCompatActivity() {
             }
         }.start()
 
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
     }
 }
