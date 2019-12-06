@@ -49,6 +49,7 @@ class AddPetActivity : AppCompatActivity() {
             val app = application as MyApplication
 
             val name = etText.text.toString()
+            etText.requestFocus()
 
             if (name.isEmpty() || name.isBlank()) {
                 Toast.makeText(this, "Type the correct name!", Toast.LENGTH_LONG).show()

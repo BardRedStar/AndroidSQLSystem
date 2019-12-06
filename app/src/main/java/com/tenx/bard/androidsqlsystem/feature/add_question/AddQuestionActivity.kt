@@ -51,6 +51,8 @@ class AddQuestionActivity : AppCompatActivity() {
             val app = application as MyApplication
 
             val text = etText.text.toString()
+            etText.requestFocus()
+
             if (text.isEmpty() || text.isBlank()) {
                 Toast.makeText(this, "Type the correct question text!", Toast.LENGTH_LONG).show()
                 return true

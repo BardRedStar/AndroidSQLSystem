@@ -83,7 +83,7 @@ class AdminActivity : AppCompatActivity() {
                 app.database?.petQuestionDao()?.deleteQuestion(items[position].id)
             }
             runOnUiThread{
-                Toast.makeText(this, "${items[position].text} has been deleted!", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "${items[position].text} has been deleted!", Toast.LENGTH_SHORT).show()
                 items = items.filter { it.id != items[position].id }
                 updateAdapterWithList(items)
             }
