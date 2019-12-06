@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">AndroidSQLSystem</string>
-    <string name="title_activity_admin">AdminActivity</string>
+    <string name="app_name">Экспертная система</string>
+    <string name="title_activity_admin">Админ-панель</string>
+    <string name="button_try_again_text"><u>Попробовать снова</u></string>
 </resources>
